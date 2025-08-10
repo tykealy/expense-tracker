@@ -20,14 +20,53 @@ const Stack = createNativeStackNavigator();
 
 function MainTabNavigator() {
   return (
-    <Tab.Navigator initialRouteName="Dashboard">
+    <Tab.Navigator 
+      initialRouteName="Dashboard"
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: '#ffffff',
+          borderTopWidth: 1,
+          borderTopColor: '#f1f5f9',
+          paddingBottom: 8,
+          paddingTop: 8,
+          height: 60,
+          elevation: 8,
+          shadowOffset: {
+            width: 0,
+            height: -2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 8,
+        },
+        tabBarActiveTintColor: '#2563eb',
+        tabBarInactiveTintColor: '#64748b',
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          marginTop: 4,
+        },
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0,
+          shadowOpacity: 0,
+          borderBottomWidth: 1,
+          borderBottomColor: '#f1f5f9',
+        },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontWeight: '600',
+          color: '#1e293b',
+        },
+      }}
+    >
       <Tab.Screen 
         name="Dashboard" 
         component={DashboardScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="view-dashboard" color={color} size={size} />
+            <MaterialCommunityIcons name="view-dashboard-outline" color={color} size={22} />
           ),
+          headerTitle: 'Overview',
         }}
       />
       <Tab.Screen 
@@ -35,8 +74,9 @@ function MainTabNavigator() {
         component={ExpensesScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="receipt" color={color} size={size} />
+            <MaterialCommunityIcons name="receipt-outline" color={color} size={22} />
           ),
+          headerTitle: 'Expenses',
         }}
       />
       <Tab.Screen 
@@ -44,8 +84,9 @@ function MainTabNavigator() {
         component={BudgetsScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="chart-pie" color={color} size={size} />
+            <MaterialCommunityIcons name="chart-pie" color={color} size={22} />
           ),
+          headerTitle: 'Budgets',
         }}
       />
       <Tab.Screen 
@@ -53,8 +94,9 @@ function MainTabNavigator() {
         component={SettingsScreen} 
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cog" color={color} size={size} />
+            <MaterialCommunityIcons name="cog-outline" color={color} size={22} />
           ),
+          headerTitle: 'Settings',
         }}
       />
     </Tab.Navigator>
@@ -80,7 +122,23 @@ function AppNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#ffffff',
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: '#f1f5f9',
+          },
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: '600',
+            color: '#1e293b',
+          },
+          headerTintColor: '#2563eb',
+        }}
+      >
         {session && session.user ? (
           <>
             <Stack.Screen 
@@ -91,12 +149,24 @@ function AppNavigator() {
             <Stack.Screen 
               name="AddExpense" 
               component={AddExpenseScreen} 
-              options={{ presentation: 'modal', headerTitle: 'Add New Expense' }}
+              options={{ 
+                presentation: 'modal', 
+                headerTitle: 'Add Expense',
+                headerStyle: {
+                  backgroundColor: '#ffffff',
+                }
+              }}
             />
             <Stack.Screen 
               name="AddBudget" 
               component={AddBudgetScreen} 
-              options={{ presentation: 'modal', headerTitle: 'Add New Budget' }}
+              options={{ 
+                presentation: 'modal', 
+                headerTitle: 'Add Budget',
+                headerStyle: {
+                  backgroundColor: '#ffffff',
+                }
+              }}
             />
             <Stack.Screen 
               name="EditExpense" 
