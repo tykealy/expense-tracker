@@ -78,41 +78,73 @@ const AddExpenseScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        label="Amount"
-        value={amount}
-        onChangeText={setAmount}
-        keyboardType="numeric"
-        style={styles.input}
-      />
-      <Text style={styles.label}>Category</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipContainer}>
-          {userCategories.map((cat) => (
-              <Chip 
-                key={cat.name} 
-                style={styles.chip}
-                selected={category === cat.name}
-                onPress={() => setCategory(cat.name)}
-              >
-                {cat.name}
-              </Chip>
-          ))}
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+          <Text style={styles.sectionTitle}>Amount</Text>
+          <TextInput
+            label="Enter amount"
+            value={amount}
+            onChangeText={setAmount}
+            keyboardType="numeric"
+            style={styles.input}
+            mode="outlined"
+            outlineColor="#e2e8f0"
+            activeOutlineColor="#2563eb"
+          />
+          
+          <Text style={styles.sectionTitle}>Category</Text>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false} 
+            contentContainerStyle={styles.chipContainer}
+          >
+              {userCategories.map((cat) => (
+                  <Chip 
+                    key={cat.name} 
+                    style={[
+                      styles.chip,
+                      category === cat.name && styles.selectedChip
+                    ]}
+                    textStyle={[
+                      styles.chipText,
+                      category === cat.name && styles.selectedChipText
+                    ]}
+                    selected={category === cat.name}
+                    onPress={() => setCategory(cat.name)}
+                  >
+                    {cat.name}
+                  </Chip>
+              ))}
+          </ScrollView>
+          
+          <Text style={styles.sectionTitle}>Description</Text>
+          <TextInput
+            label="Add a note (optional)"
+            value={description}
+            onChangeText={setDescription}
+            style={styles.input}
+            mode="outlined"
+            outlineColor="#e2e8f0"
+            activeOutlineColor="#2563eb"
+            multiline
+            numberOfLines={3}
+          />
+        </View>
       </ScrollView>
-      <TextInput
-        label="Description (Optional)"
-        value={description}
-        onChangeText={setDescription}
-        style={styles.input}
-      />
-      <Button 
-        mode="contained" 
-        onPress={handleSave} 
-        loading={loading} 
-        style={styles.button}
-      >
-        Save Expense
-      </Button>
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      
+      <View style={styles.footer}>
+        <Button 
+          mode="contained" 
+          onPress={handleSave} 
+          loading={loading} 
+          style={styles.saveButton}
+          buttonColor="#2563eb"
+          textColor="#ffffff"
+        >
+          Save Expense
+        </Button>
+        {error && <Text style={styles.errorText}>{error}</Text>}
+      </View>
     </View>
   );
 };
@@ -120,32 +152,64 @@ const AddExpenseScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    backgroundColor: '#fafafa',
   },
-  label: {
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    padding: 24,
+  },
+  sectionTitle: {
     fontSize: 16,
-    marginBottom: 10,
-    color: '#666'
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: 12,
+    marginTop: 8,
   },
   chipContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 15,
+    marginBottom: 24,
+    paddingHorizontal: 4,
   },
   chip: {
-    marginRight: 8,
+    marginRight: 12,
     marginBottom: 8,
+    backgroundColor: '#f8fafc',
+    borderColor: '#e2e8f0',
+    borderWidth: 1,
+  },
+  selectedChip: {
+    backgroundColor: '#dbeafe',
+    borderColor: '#2563eb',
+  },
+  chipText: {
+    color: '#475569',
+    fontSize: 14,
+  },
+  selectedChipText: {
+    color: '#2563eb',
+    fontWeight: '500',
   },
   input: {
-    marginBottom: 15,
+    marginBottom: 24,
+    backgroundColor: '#ffffff',
   },
-  button: {
-    marginTop: 10,
+  footer: {
+    padding: 24,
+    backgroundColor: '#ffffff',
+    borderTopWidth: 1,
+    borderTopColor: '#f1f5f9',
+  },
+  saveButton: {
+    borderRadius: 12,
+    paddingVertical: 6,
   },
   errorText: {
-    marginTop: 10,
-    color: 'red',
+    marginTop: 12,
+    color: '#dc2626',
     textAlign: 'center',
+    fontSize: 14,
   }
 });
 
